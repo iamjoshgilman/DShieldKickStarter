@@ -8,7 +8,7 @@ This project automates the backup of honeypot data, including SCP transfers to a
 - **Logging**: Logs the success or failure of SCP transfers to a local file.
 - **PCAP File Management**: Clears older PCAP files to save space and ensure smooth operation.
 - **Cron Jobs**: Automates the backup and log rotation processes.
-- **Additional Tools**: Optional install of helpful log processing tools (cowrieprocessor, JSON-Log-Country, DShield-SIEM)
+- **Additional Tools**: Optional install of helpful log processing tools (cowrieprocessor, JSON-Log-Country)
 - **Key-based Authentication**: If using SCP, ensure SSH key-based authentication is set up between the honeypot and remote server.
 
 ### Required Tools
@@ -93,9 +93,8 @@ You can adjust which directories or files are zipped and password-protected.
 The default password for the ZIP files is **infected**
 
 ## Additional Tools
-Optionally, Cowrieprocessor, JSON-Log-Country, and DShield-SIEM can be cloned in your home directory. Additional Information
+Optionally, Cowrieprocessor, and JSON-Log-Country can be cloned in your home directory. Additional Information
 can be found at their respective repos. 
 
 - `https://github.com/jslagrew/cowrieprocessor`
 - `https://github.com/justin-leibach/JSON-Log-Country`
-- `https://github.com/bruneaug/DShield-SIEM`
