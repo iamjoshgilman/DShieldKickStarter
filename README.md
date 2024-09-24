@@ -1,6 +1,6 @@
-# DShieldKickStarter Backup and Logging Script
+# DShieldKickStarter
 
-This project contains a script to automate the backup of honeypot data, including SCP transfers to a remote server and local logging of backup operations. The script ensures regular backups of logs and other relevant files, with the option to transfer those backups to a remote server using SCP. It also maintains a log of the backup success or failure for auditing purposes.
+This project automates the backup of honeypot data, including SCP transfers to a remote server and local logging of backup operations. The script ensures regular backups of logs and other relevant files, with the option to transfer those backups to a remote server using SCP. It also maintains a log of the backup success or failure for auditing purposes. Optional tools have also been added for convenience.
 
 ## Features
 - **Automated Backup**: Backups are created and password-protected to prevent accidental execution.
