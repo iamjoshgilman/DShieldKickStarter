@@ -24,7 +24,7 @@ The script will install the following packages if they are not already installed
 ### Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/DShieldKickStarter.git
+git clone https://github.com/iamjoshgilman/DShieldKickStarter.git
 cd DShieldKickStarter
 ```
 
