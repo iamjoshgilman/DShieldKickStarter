@@ -8,7 +8,8 @@ This project contains a script to automate the backup of honeypot data, includin
 - **Logging**: Logs the success or failure of SCP transfers to a local file.
 - **PCAP File Management**: Clears older PCAP files to save space and ensure smooth operation.
 - **Cron Jobs**: Automates the backup and log rotation processes.
-- **Key-based Authentication**: If using SCP, ensure SSH key-based authentication is set up between the honeypot server and the remote server.
+- **Additional Tools**: Optional install of helpful log processing tools (cowrieprocessor, JSON-Log-Country)
+- **Key-based Authentication**: If using SCP, ensure SSH key-based authentication is set up between the honeypot and remote server.
 
 ### Required Tools
 The script will install the following packages if they are not already installed:
@@ -64,14 +65,14 @@ This file contains timestamps and success or failure messages for each backup at
 ### Cron Jobs
 The script automatically sets up cron jobs for:
 - **Daily Backups**: The backup script is scheduled to run daily at 3:00 AM.
-- **Log Rotation**: If you choose to add log rotation, it will archive and rotate the logs monthly.
+- **Log Rotation**: Will archive and rotate the logs monthly.
 - **SCP Transfer (if enabled)**: If SCP is enabled, it is scheduled to transfer backups at 4:00 AM daily.
 
 ## File Structure
 The main files included in this project are:
-- `honeypot_backup.sh`: Main script that handles the setup, backups, and optional SCP transfers.
+- `honeypot_backup.sh`: The script handles the setup, backups, and optional SCP transfers.
 - `scp_backup.sh`: Automatically generated script for SCP transfer if enabled.
-- `backup.sh`: Handles the actual backup process for log and home directory data.
+- `backup.sh`: Handles the log and home directory data backup process.
 
 ### Directory Structure
 The script creates the following directories if they do not exist:
@@ -79,7 +80,7 @@ The script creates the following directories if they do not exist:
 - `/var/log/honeypot/webhoneypot`: Stores web honeypot logs.
 - `/var/lib/honeypot/dumps`: Stores packet capture files (PCAP).
 - `/var/backups/honeypot`: Stores zipped backup files.
-- `/opt/honeypot/scripts`: Stores custom scripts used for backups and transfers.
+- `/opt/honeypot/scripts`: Stores custom scripts for backups and transfers.
 
 ## Customization
 
@@ -88,8 +89,12 @@ To modify what gets backed up, you can edit the backup script located at:
 ```bash
 /opt/honeypot/scripts/backup.sh
 ```
-You can adjust which directories or files are zipped and password protected.
+You can adjust which directories or files are zipped and password-protected.
 The default password for the ZIP files is **infected**
 
-## License
-This project is licensed under the GPL-3.0 License.
+## Additional Tools
+Optionally, Cowrieprocessor and JSON-Log-Country can be cloned in your home directory. Additional Information
+can be found at their respective repos. 
+
+- `https://github.com/jslagrew/cowrieprocessor`
+- `https://github.com/justin-leibach/JSON-Log-Country`
