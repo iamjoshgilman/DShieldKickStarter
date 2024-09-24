@@ -177,7 +177,7 @@ check_status "Backup"
 print_in_color "YELLOW" "Logs location: /var/log/honeypot"
 
 # Prompt for additional tools installation
-read -p "Do you want to install additional tools (cowrieprocessor, JSON-Log-Country, SIEM)? (y/n): " install_tools
+read -p "Do you want to install additional tools (cowrieprocessor, JSON-Log-Country)? (y/n): " install_tools
 if [[ "$install_tools" == "y" || "$install_tools" == "Y" ]]; then
 
     # Change to the non-root user's home directory
@@ -202,16 +202,6 @@ if [[ "$install_tools" == "y" || "$install_tools" == "Y" ]]; then
         print_in_color "GREEN" "JSON-Log-Country installed successfully in $USER_HOME/JSON-Log-Country!"
     else
         print_in_color "RED" "Failed to install JSON-Log-Country."
-    fi
-
-    # Install DShield-SIEM from GitHub
-    print_in_color "BLUE" "Cloning DShield-SIEM into $USER_HOME..."
-    sudo -u $SUDO_USER git clone https://github.com/bruneaug/DShield-SIEM.git
-
-    if [[ $? -eq 0 ]]; then
-        print_in_color "GREEN" "DShield-SIEM installed successfully in $USER_HOME/DShield-SIEM!"
-    else
-        print_in_color "RED" "Failed to install DShield-SIEM."
     fi
 
 else
