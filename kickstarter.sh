@@ -47,6 +47,9 @@ if [[ "$EUID" -ne 0 ]]; then
     exit 1
 fi
 
+# Get the non-root user's home directory
+USER_HOME=$(eval echo ~$SUDO_USER)
+
 # Create all necessary directories if they don't exist
 print_in_color "BLUE" "Checking and creating required directories..."
 required_dirs=(
@@ -172,6 +175,38 @@ check_status "Backup"
 
 # Notify of log locations
 print_in_color "YELLOW" "Logs location: /var/log/honeypot"
+
+# Prompt for additional tools installation
+read -p "Do you want to install additional tools (cowrieprocessor, JSON-Log-Country)? (y/n): " install_tools
+if [[ "$install_tools" == "y" || "$install_tools" == "Y" ]]; then
+
+    # Change to the non-root user's home directory
+    print_in_color "BLUE" "Switching to $USER_HOME for tool installations..."
+    cd "$USER_HOME"
+
+    # Install cowrieprocessor from GitHub
+    print_in_color "BLUE" "Cloning cowrieprocessor into $USER_HOME..."
+    sudo -u $SUDO_USER git clone https://github.com/jslagrew/cowrieprocessor.git
+
+    if [[ $? -eq 0 ]]; then
+        print_in_color "GREEN" "cowrieprocessor installed successfully in $USER_HOME/cowrieprocessor!"
+    else
+        print_in_color "RED" "Failed to install cowrieprocessor."
+    fi
+
+    # Install JSON-Log-Country from GitHub
+    print_in_color "BLUE" "Cloning JSON-Log-Country into $USER_HOME..."
+    sudo -u $SUDO_USER git clone https://github.com/justin-leibach/JSON-Log-Country.git
+
+    if [[ $? -eq 0 ]]; then
+        print_in_color "GREEN" "JSON-Log-Country installed successfully in $USER_HOME/JSON-Log-Country!"
+    else
+        print_in_color "RED" "Failed to install JSON-Log-Country."
+    fi
+
+else
+    print_in_color "YELLOW" "Tool installation skipped."
+fi
 
 # Dynamic Final Message
 if [[ "$scp_enabled" == "yes" ]]; then
