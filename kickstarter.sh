@@ -21,8 +21,7 @@ print_in_color() {
 
 # Function to install a package
 install_package() {
-    apt-get install -y "$1" > /dev/null 2>&1; then
-    if [[ $? -eq 0 ]]; then
+    if apt-get install -y "$1" > /dev/null 2>&1; then
         print_in_color "GREEN" "$1 installed successfully!"
     else
         print_in_color "RED" "Error installing $1."
@@ -38,6 +37,16 @@ add_cron_job() {
         print_in_color "GREEN" "Cron job '$job' added."
     else
         print_in_color "YELLOW" "Cron job '$job' already exists."
+    fi
+}
+
+# Function to check status and handle failures
+check_status() {
+    if [[ $? -ne 0 ]]; then
+        print_in_color "RED" "$1 failed!"
+        exit 1
+    else
+        print_in_color "GREEN" "$1 completed successfully."
     fi
 }
 
@@ -103,7 +112,7 @@ print_in_color "BLUE" "Setting up PCAP capture with tcpdump..."
 cat <<'EOT' > /var/lib/honeypot/dumps/grab_tcpdump.sh
 #!/bin/bash
 DEFAULT_IFACE=$(ip route | grep '^default' | awk '{print $5}')
-tcpdump -i "$DEFAULT_IFACE" -s 65535 port not 12222 -w "/var/lib/honeypot/dumps/tcpdump_%Y-%m-%d_%H-%M-%S.pcap" -G 86400 -C 100 -Z root &
+tcpdump -i "$DEFAULT_IFACE" -s 65535 port not 12222 -w "/var/lib/honeypot/dumps/tcpdump_%Y-%m-%d_%H-%M-%S.pcap" -G 86400 -Z root &
 EOT
 chmod +x /var/lib/honeypot/dumps/grab_tcpdump.sh
 
@@ -118,7 +127,14 @@ TIMESTAMP=$(date "+%Y%m%d")
 zip -r -e -P infected /var/backups/honeypot/home_$TIMESTAMP.zip /home
 zip -r -e -P infected /var/backups/honeypot/logs_$TIMESTAMP.zip /var/log/honeypot
 zip -r -e -P infected /var/backups/honeypot/srv_$TIMESTAMP.zip /srv
-zip -r -e -P infected /var/backups/honeypot/dshield_logs_$TIMESTAMP.zip /var/log/dshield*
+
+# Check if DShield logs exist before backing up
+if ls /var/log/dshield* 1> /dev/null 2>&1; then
+    zip -r -e -P infected /var/backups/honeypot/dshield_logs_$TIMESTAMP.zip /var/log/dshield*
+else
+    echo "No DShield logs found, skipping..."
+fi
+
 zip -r -e -P infected /var/backups/honeypot/crontabs_$TIMESTAMP.zip /var/spool/cron/crontabs
 zip -r -e -P infected /var/backups/honeypot/dumps_$TIMESTAMP.zip /var/lib/honeypot/dumps
 
