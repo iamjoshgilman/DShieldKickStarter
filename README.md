@@ -2,6 +2,8 @@
 
 This project automates the backup of honeypot data, including SCP transfers to a remote server and local logging of backup operations. The script ensures regular backups of logs and other relevant files, with the option to transfer those backups to a remote server using SCP. It also maintains a log of the backup success or failure for auditing purposes. Optional tools have also been added for convenience. Blog write-up https://www.iamjoshgilman.com/kickstart-your-dshield-honeypot/
 
+**Featured on SANS Internet Storm Center** - https://isc.sans.edu/diary/31320
+
 ## Features
 - **Automated Backup**: Backups are created and password-protected to prevent accidental execution.
 - **Optional SCP Transfer**: The script offers the option to transfer backups to a remote server via SCP, using key-based authentication.
